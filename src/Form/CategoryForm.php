@@ -17,6 +17,7 @@ class CategoryForm extends AbstractType
         $builder
             ->add('title', null, [
                 'label' => 'Category Title',
+                'required' => true,
                 'attr' => [
                     'placeholder' => 'Enter category title',
                     'class' => 'input category-title-input',

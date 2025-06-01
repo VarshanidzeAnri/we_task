@@ -15,9 +15,27 @@ class NewsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('content')
+            ->add('title', null, [
+                'label' => 'News Title',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Enter news title',
+                ],
+            ])
+            ->add('description', null, [
+                'label' => 'Description',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Enter a brief description',
+                ],
+            ])
+            ->add('content', null, [
+                'label' => 'Content',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Enter the full content of the news',
+                ],
+            ])
 
             ->add('picture', FileType::class, [
                 
