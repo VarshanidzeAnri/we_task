@@ -1,0 +1,75 @@
+.login-form{
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 350px;
+    margin: 100px auto;
+    padding: 35px 25px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    gap: 4px; 
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 2px;
+    font-size: 14px;
+
+}
+
+.input{
+    display: flex;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    background-color: #f9f9f9;
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 0; /* Ensure no extra margin on inputs */
+}
+
+.input:focus {
+    border-color: #4CAF50;
+}
+
+.login-button{
+    display: flex;
+    padding: 14px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px; /* Adjusted margin-top */
+}
+
+/* Removed hover and active states for login button */
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.alert-danger{
+    color: red;
+}

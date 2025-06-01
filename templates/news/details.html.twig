@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/news.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="news-detail-container">
+    <div class="page-navigation">
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <article class="news-article">
+        <header class="article-header">
+            <h1 class="article-title">{{ news.title }}</h1>
+            <div class="article-meta">
+                <time class="article-date">
+                    <i class="far fa-calendar"></i> {{ news.insertDate|date('d/m/Y') }}
+                </time>
+                
+                {% if news.categories is defined and news.categories|length > 0 %}
+                <div class="article-categories">
+                    {% for category in news.categories %}
+                        <a href="{{ path('category_show', {'id': category.id}) }}" class="category-badge">
+                            {{ category.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if news.picture %}
+            <div class="article-featured-image">
+                <img src="{{ asset(news.picture) }}" alt="{{ news.title }}">
+            </div>
+        {% else %}
+            <div class="article-featured-image article-featured-placeholder">
+                <div class="placeholder-icon">📰</div>
+            </div>
+        {% endif %}
+
+        <div class="article-description">
+            {{ news.description }}
+        </div>
+
+        <div class="article-content">
+            {{ news.content|raw }}
+        </div>
+    </article>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="latest-news">Latest News</h2>
+    <div class="categories-container">
+
+        {% for category in categories %}
+
+            <div class="categories">
+                <a href="{{ path('category_show', {'id': category.id}) }}" class="category-name">{{ category.title }}</a>
+                <div class="news-container">
+                {% for news in category.limitedNews %}
+                    <div>
+                        <div class="news-picture"></div>
+                        <div class="news-title news-item"><a class="news_link" href="{{ path('news_details', {'id': news.id}) }}" >{{ news.title }}</a></div>
+                        <div class="news-description news-item">{{ news.description }}</div>
+                    </div>
+                {% else %}
+                    <div class="no-news">No articles in this category yet</div>
+                {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="no-categories">No categories available</div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

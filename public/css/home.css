@@ -1,0 +1,138 @@
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: capitalize;
+}
+
+.latest-news {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.latest-news:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #4CAF50;
+}
+
+.categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.category-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    text-decoration: underline;
+}
+
+.news-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+}
+
+.news-container > div {
+    flex: 0 0 calc(33.33% - 14px); 
+    min-width: 0; 
+    max-width: calc(33.33% - 14px); 
+    background: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.news-picture {
+    height: 160px;
+    background-color: #e0e0e0;
+    background-image: linear-gradient(45deg, #f5f5f5, #e0e0e0);
+}
+
+.news-item {
+    padding: 12px 15px;
+}
+
+.news-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.news-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 20px auto;
+    }
+    
+    .news-container {
+        flex-direction: column;
+    }
+    
+    .news-container > div {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .news-container > div {
+        max-width: calc(33.33% - 14px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .news-container {
+        flex-wrap: nowrap;
+        overflow-x: visible;
+    }
+}
+
+.news_link{
+    text-decoration: none;
+    color: inherit;
+}

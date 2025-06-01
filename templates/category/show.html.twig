@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="category-container">
+    <header class="category-header">
+        <h1 class="category-title">{{ category.title }}</h1>
+    </header>
+
+    <div class="news-grid">
+        {% for item in news %}
+            <div class="news-card">
+                <div class="news-image"></div>
+                <div class="news-content">
+                <a class="news-title" href="{{ path('news_details', {'id': item.id}) }}">
+                    <h3 class="news-title">{{ item.title }}</h3>
+                </a>
+                    <div class="news-description">{{ item.description }}</div>
+                    <div class="news-footer">
+                        <time class="news-date">
+                            {{ item.insertDate|date('d/m/Y') }}
+                        </time>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3>No articles found</h3>
+                <p>There are no articles available in this category yet.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination-container">
+        {{ knp_pagination_render(news, 'pagination/custom_pagination.html.twig') }}
+    </div>
+</div>
+{% endblock %}
