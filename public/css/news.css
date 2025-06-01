@@ -312,6 +312,11 @@
     margin-top: 5px;
 }
 
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
 
 .section-title {
     font-size: 20px;
@@ -358,107 +363,72 @@
     cursor: pointer;
 }
 
-.file-upload-container {
+.form-control-select {
     width: 100%;
-}
-
-.file-input-wrapper {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.form-control-file {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-.file-input-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: #f5f5f5;
-    border: 2px dashed #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 16px;
-    color: #666;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
-}
-
-.file-input-button:hover {
-    background-color: #e6e6e6;
-}
-
-.file-input-button:active {
-    background-color: #d9d9d9;
-}
-
-.file-preview-container {
-    margin-top: 15px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    position: relative;
-}
-
-.file-preview-container.has-file {
+    padding: 12px 15px;
     border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    min-height: 120px;
 }
 
-.file-preview-default {
-    color: #888;
-    font-style: italic;
+.content-editor {
+    min-height: 300px;
+    line-height: 1.6;
+    font-family: inherit;
 }
 
-.file-preview-image {
-    display: none;
-    max-width: 100%;
-    max-height: 200px;
-    margin: 0 auto 10px;
-    border-radius: 4px;
+.form-help {
+    display: block;
+    color: #777;
+    margin-top: 6px;
+    font-size: 13px;
 }
 
-.file-preview-name {
-    display: none;
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
-    word-break: break-all;
+.form-actions {
+    margin-top: 40px;
+    text-align: center;
 }
 
-.file-preview-remove {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff5252;
+.btn-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.file-preview-remove:hover {
-    background-color: #f44336;
+.btn-save:hover {
+    background-color: #3d8b40;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.file-input-wrapper.has-file .file-input-button {
-    background-color: #e8f5e9;
-    border: 2px solid #4CAF50;
-    color: #4CAF50;
-    font-weight: 600;
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #ef5350;
+}
+
+.error-list {
+    margin: 5px 0 5px 20px;
+    padding: 0;
+}
+
+.category-select + .select2-container {
+    width: 100% !important;
 }
 
 .select2-container--classic .select2-selection--multiple {
@@ -629,6 +599,203 @@
     color: #4CAF50;
 }
 
+.image-upload-container {
+    margin-bottom: 15px;
+}
+
+.image-upload-area {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.image-upload-area:hover {
+    border-color: #4CAF50;
+    background-color: #f0f9f0;
+}
+
+.image-upload-area.drag-over {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.image-upload-area.has-image {
+    border-style: solid;
+    border-color: #4CAF50;
+    background-color: #f0f9f0;
+}
+
+.image-upload-area.has-image .upload-placeholder {
+    display: none !important; /* Ensure it's always hidden when an image is present */
+}
+
+.image-upload-area.has-image .form-help {
+    display: none !important; /* Hide the "select image" prompt text */
+}
+
+.image-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+}
+
+.upload-icon {
+    font-size: 48px;
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+.upload-title {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.upload-subtitle {
+    display: block;
+    font-size: 14px;
+    color: #777;
+}
+
+.image-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: #f0f9f0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.image-upload-area.has-image .upload-placeholder {
+    display: none;
+}
+
+.remove-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ff5252;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    padding: 0;
+    font-size: 16px;
+    pointer-events: auto;
+}
+
+.remove-image i {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.enhanced-remove-image {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ff3b30;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 30;
+    padding: 0;
+    font-size: 20px;
+    pointer-events: auto;
+    transition: transform 0.2s;
+}
+
+.enhanced-remove-image:hover {
+    background-color: #e0271e;
+    transform: scale(1.1);
+}
+
+.enhanced-remove-image:active {
+    background-color: #c01e15;
+    transform: scale(1);
+}
+
+.enhanced-remove-image i {
+    font-size: 18px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.image-upload-area.has-image .enhanced-remove-image {
+    display: flex !important;
+}
+
+/* Style for the hidden form widget container */
+.hidden-form-widget {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+}
+
+/* Ensure the form-generated input has proper styling */
+.hidden-form-widget input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 2;
+}
+
 @media (max-width: 768px) {
     .page-navigation {
         flex-direction: column;
@@ -691,65 +858,4 @@
     .article-content {
         font-size: 16px;
     }
-}
-
-.form-actions {
-    margin-top: 40px;
-    text-align: center;
-}
-
-.btn-save {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 14px 32px;
-    background: linear-gradient(to right, #4CAF50, #45a049);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-save i {
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
-
-.btn-save:hover {
-    background: linear-gradient(to right, #45a049, #3d8b40);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-    transform: translateY(-2px);
-}
-
-.btn-save:hover i {
-    transform: translateX(3px);
-}
-
-.btn-save:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
-}
-
-.btn-save::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-}
-
-.btn-save:hover::after {
-    transform: translateX(100%);
 }

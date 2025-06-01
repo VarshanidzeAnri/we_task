@@ -23,71 +23,82 @@
             <h1 class="form-title">Create News</h1>
         </header>
 
-        {% if errors is defined and errors|length > 0 %}
+        {% if form.vars.errors|length > 0 %}
             <div class="alert alert-danger">
                 <ul class="error-list">
-                    {% for error in errors %}
-                        <li>{{ error }}</li>
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
                     {% endfor %}
                 </ul>
             </div>
         {% endif %}
 
-        <form action="{{ path('news_new') }}" method="post" enctype="multipart/form-data" class="news-form">
-            <input type="hidden" name="token" value="{{ csrf_token('news_form') }}">
-            
+        {{ form_start(form, {'attr': {'class': 'news-form'}}) }}
             <div class="form-section">
+                
                 <div class="form-group">
-                    <label for="news_title">Title</label>
-                    <input type="text" id="news_title" name="news[title]" class="form-control" required 
-                           value="{{ news is defined ? news.title : '' }}">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.title) }}
                 </div>
 
                 <div class="form-group">
-                    <label for="news_description">Description</label>
-                    <textarea id="news_description" name="news[description]" class="form-control" rows="3" required>{{ news is defined ? news.description : '' }}</textarea>
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
                 </div>
             </div>
 
             <div class="form-section">
                 <h3 class="section-title">Content</h3>
+                
                 <div class="form-group">
-                    <label for="news_content">Content</label>
-                    <textarea id="news_content" name="news[content]" class="form-control content-editor" rows="10" required>{{ news is defined ? news.content : '' }}</textarea>
+                    {{ form_label(form.content) }}
+                    {{ form_widget(form.content, {'attr': {'class': 'form-control content-editor'}}) }}
+                    {{ form_errors(form.content) }}
                 </div>
             </div>
 
             <div class="form-section">
+                
                 <div class="form-group">
-                    <label for="news_picture">Picture</label>
-                    <div class="file-upload-container">
-                        <div class="file-input-wrapper">
-                            <input type="file" id="news_picture" name="news[picture]" class="form-control-file file-input" accept="image/*">
-                            <label for="news_picture" class="file-input-button">
-                                <i class="fas fa-cloud-upload-alt"></i> Choose File
-                            </label>
-                        </div>
-                        
-                        <div class="file-preview-container">
-                            <div class="file-preview-default"></div>
-                            <img class="file-preview-image" src="#" alt="File preview">
-                            <div class="file-preview-name"></div>
-                            <button type="button" class="file-preview-remove">
-                                <i class="fas fa-times"></i>
+                    {{ form_label(form.picture) }}
+                    <div class="image-upload-container">
+                        <div class="image-upload-area" id="dropArea">
+                            {# Replace custom input with Symfony's form widget but keep it hidden #}
+                            <div class="hidden-form-widget">
+                                {{ form_widget(form.picture, {'attr': {'class': 'image-upload-input', 'accept': 'image/*'}}) }}
+                            </div>
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <span class="upload-title">Drag & drop an image or click to browse</span>
+                                    <span class="upload-subtitle">JPG, PNG or GIF • Max 5MB</span>
+                                </div>
+                            </div>
+                            <div class="image-preview">
+                                <img src="#" alt="Preview" id="imagePreview">
+                            </div>
+                            <button type="button" class="remove-image" style="display: none;">
+                                <i class="fas fa-times">X</i>
                             </button>
                         </div>
                     </div>
+                    <div class="form-errors">{{ form_errors(form.picture) }}</div>
+                    <small class="form-help image-size-help">Recommended image size: 1200×630 pixels</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="news_categories">Categories</label>
+                    {{ form_label(form.categories) }}
                     <div class="custom-multiselect-container">
-                        <select id="news_categories" name="news[categories][]" class="form-control-select original-select" multiple>
-                            {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.title }}</option>
-                            {% endfor %}
-                        </select>
-                        
+                        {{ form_widget(form.categories, {
+                            'attr': {
+                                'class': 'form-control-select original-select',
+                                'multiple': 'multiple'
+                            }
+                        }) }}
                         <div class="custom-multiselect">
                             <div class="multiselect-selected-options">
                                 <input type="text" class="multiselect-search" placeholder="Select categories">
@@ -95,6 +106,8 @@
                             <div class="multiselect-dropdown"></div>
                         </div>
                     </div>
+                    {{ form_errors(form.categories) }}
+                    <small class="form-help">Click to select multiple categories</small>
                 </div>
             </div>
 
@@ -103,7 +116,7 @@
                     <i class="fas fa-paper-plane"></i> Save
                 </button>
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock %}

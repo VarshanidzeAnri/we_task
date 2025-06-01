@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Entity\Category;
+use App\Form\NewsForm;
+use App\Service\FileUploader;
+use App\Service\RandomStringGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,81 +24,34 @@ final class NewsController extends AbstractController
     }
 
     #[Route('/news/new', name: 'news_new')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
-        // Fetch categories for the dropdown
-        $categories = $em->getRepository(Category::class)->findAll();
+        $news = new News();
+        $form = $this->createForm(NewsForm::class, $news);
+        $form->handleRequest($request);
         
-        $errors = [];
-        
-        // Handle form submission
-        if ($request->isMethod('POST')) {
-            // Validate CSRF token
-            $submittedToken = $request->request->get('token');
-            if (!$this->isCsrfTokenValid('news_form', $submittedToken)) {
-                $errors[] = 'Invalid CSRF token. Please try again.';
-            } else {
-                // Create a new News entity
-                $news = new News();
+        $categories = $entityManager->getRepository(Category::class)->findAll();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureFile = $form->get('picture')->getData();
+            
+            if ($pictureFile) {
+                $filename = $fileUploader->uploader($pictureFile);
+                $pictureFile->move($this->getParameter('news_files'), $filename);
                 
-                // Handle form data
-                $newsData = $request->request->get('news');
-                
-                // Set basic fields
-                $news->setTitle($newsData['title'] ?? '');
-                $news->setDescription($newsData['description'] ?? '');
-                $news->setContent($newsData['content'] ?? '');
-                $news->setInsertDate(new \DateTime());
-                
-                // Handle file upload
-                $pictureFile = $request->files->get('news')['picture'] ?? null;
-                if ($pictureFile) {
-                    $newFilename = 'news-'.uniqid().'.'.$pictureFile->guessExtension();
-                    
-                    try {
-                        $pictureFile->move(
-                            $this->getParameter('news_pictures_directory'),
-                            $newFilename
-                        );
-                        $news->setPicture('uploads/news/'.$newFilename);
-                    } catch (FileException $e) {
-                        $errors[] = 'Error uploading file: ' . $e->getMessage();
-                    }
-                }
-                
-                // Handle categories
-                if (isset($newsData['categories']) && is_array($newsData['categories'])) {
-                    foreach ($newsData['categories'] as $categoryId) {
-                        $category = $em->getRepository(Category::class)->find($categoryId);
-                        if ($category) {
-                            $news->addCategory($category);
-                        }
-                    }
-                }
-                
-                // Validate the entity
-                $validator = $this->container->get('validator');
-                $validationErrors = $validator->validate($news);
-                
-                if (count($validationErrors) === 0 && count($errors) === 0) {
-                    // Save to database
-                    $em->persist($news);
-                    $em->flush();
-                    
-                    $this->addFlash('success', 'News created successfully!');
-                    return $this->redirectToRoute('news_details', ['id' => $news->getId()]);
-                } else {
-                    // Add validation errors
-                    foreach ($validationErrors as $error) {
-                        $errors[] = $error->getMessage();
-                    }
-                }
+                $news->setPicture('news/' . $filename);
             }
+
+            $entityManager->persist($news);
+            $entityManager->flush();
+            $this->addFlash('success', 'News created successfully!');
+
+            return $this->redirectToRoute('home');
         }
-        
+
         return $this->render('news/new.html.twig', [
-            'categories' => $categories,
-            'errors' => $errors
+            'form' => $form,
+            'categories' => $categories,    
         ]);
     }
 }

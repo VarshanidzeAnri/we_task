@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\News;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,14 @@ class NewsForm extends AbstractType
             ->add('description')
             ->add('content')
 
-            ->add('picture')
+            ->add('picture', FileType::class, [
+                
+                'required' => true,
+                'mapped' => false,
+                'attr' => [
+                    'accept' => 'image/*',
+                ],
+            ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'title',
