@@ -26,7 +26,15 @@
     <div class="news-grid">
         {% for item in news %}
             <div class="news-card">
-                <div class="news-image"></div>
+                <div class="news-image">
+                    {% if item.picture %}
+                        <img src="{{ asset(item.picture) }}" alt="{{ item.title }}">
+                    {% else %}
+                        <div class="news-image-placeholder">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                    {% endif %}
+                </div>
                 <div class="news-content">
                 <a class="news-title" href="{{ path('news_details', {'id': item.id}) }}">
                     <h3 class="news-title">{{ item.title }}</h3>

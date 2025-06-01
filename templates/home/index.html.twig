@@ -17,7 +17,15 @@
                 <div class="news-container">
                 {% for news in category.limitedNews %}
                     <div>
-                        <div class="news-picture"></div>
+                        <div class="news-picture">
+                            {% if news.picture %}
+                                <img src="{{ asset(news.picture) }}" alt="{{ news.title }}">
+                            {% else %}
+                                <div class="news-picture-placeholder">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                            {% endif %}
+                        </div>
                         <div class="news-title news-item"><a class="news_link" href="{{ path('news_details', {'id': news.id}) }}" >{{ news.title }}</a></div>
                         <div class="news-description news-item">{{ news.description }}</div>
                     </div>

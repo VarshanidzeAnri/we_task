@@ -54,4 +54,54 @@ final class NewsController extends AbstractController
             'categories' => $categories,    
         ]);
     }
+
+    #[Route('/news/{id<\d+>}/edit', name: 'news_edit')]
+    public function edit(News $news, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    {
+        $form = $this->createForm(NewsForm::class, $news);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureFile = $form->get('picture')->getData();
+            
+            if ($pictureFile) {
+                if ($news->getPicture()) {
+                    $existingPicturePath = $this->getParameter('news_files') . '/' . basename($news->getPicture());
+                    if (file_exists($existingPicturePath)) {
+                        unlink($existingPicturePath);
+                    }
+                }
+                $filename = $fileUploader->uploader($pictureFile);
+                $pictureFile->move($this->getParameter('news_files'), $filename);
+                
+                $news->setPicture('news/' . $filename);
+            }
+
+            $entityManager->flush();
+            $this->addFlash('success', 'News updated successfully!');
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('news/edit.html.twig', [
+            'form' => $form,
+            'news' => $news,
+        ]);
+    }
+
+    #[Route('/news/{id<\d+>}/delete', name: 'news_delete')]
+    public function delete(News $news, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($news);
+        if ($news->getPicture()) {
+            $picturePath = $this->getParameter('news_files') . '/' . basename($news->getPicture());
+            if (file_exists($picturePath)) {
+                unlink($picturePath);
+            }
+        }
+        $entityManager->flush();
+        $this->addFlash('success', 'News deleted successfully!');
+
+        return $this->redirectToRoute('home');
+    }
 }

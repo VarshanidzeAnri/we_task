@@ -125,6 +125,35 @@ function setupFileUpload() {
     });
 }
 
+// Initialize with existing image when in edit mode
+function initializeWithExistingImage(imageSrc) {
+    const dropArea = document.getElementById('dropArea');
+    const preview = document.getElementById('imagePreview');
+    const placeholder = dropArea.querySelector('.upload-placeholder');
+    const previewContainer = dropArea.querySelector('.image-preview');
+    const removeButton = dropArea.querySelector('.remove-image');
+    
+    if (!preview || !placeholder || !previewContainer || !removeButton) {
+        console.error('Missing required elements for file upload');
+        return;
+    }
+    
+    // Set the image source
+    preview.src = imageSrc;
+    
+    // Update the UI to show we have an image
+    placeholder.style.display = 'none';
+    previewContainer.style.display = 'block';
+    removeButton.style.display = 'flex';
+    dropArea.classList.add('has-image');
+    
+    // Hide help text
+    const helpText = document.querySelector('.image-size-help');
+    if (helpText) {
+        helpText.style.display = 'none';
+    }
+}
+
 
 function setupCategorySelect() {
     const select = document.querySelector('.original-select');

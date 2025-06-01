@@ -8,8 +8,9 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/news.js') }}"></script>
+    
 {% endblock %}
 
 {% block body %}
-    {{ include('news/_form.html.twig', { 'form_name': 'Create News', 'button_label': 'Save' })  }}
+    {{ include('news/_form.html.twig', { 'form_name': 'Edit News', 'button_label': 'Update', 'existing_image': news.picture is defined ? asset(news.picture) : null })  }}
 {% endblock %}
