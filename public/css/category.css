@@ -1,11 +1,9 @@
-/* Category Detail Page Styles */
 .category-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* Header Styling */
 .category-header {
     margin-bottom: 30px;
 }
@@ -96,10 +94,9 @@
     font-weight: 500;
 }
 
-/* News Grid Layout */
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Changed to exactly 4 columns */
+    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
     margin-bottom: 40px;
 }
@@ -124,8 +121,8 @@
 .news-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the container */
-    object-position: center; /* Centers the image */
+    object-fit: cover;
+    object-position: center;
     display: block;
 }
 
@@ -186,7 +183,6 @@
     color: #4CAF50;
 }
 
-/* Empty State Styling */
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
@@ -212,7 +208,6 @@
     margin: 0 auto;
 }
 
-/* Footer Navigation */
 .category-footer {
     text-align: center;
     margin-top: 30px;
@@ -233,7 +228,6 @@
     background-color: #e5e5e5;
 }
 
-/* Button-Style Pagination */
 .pagination-container {
     text-align: right;
     margin: 30px 0 20px;
@@ -256,7 +250,6 @@
     display: inline-block;
 }
 
-/* Force button appearance on links */
 .pagination .page-link {
     color: #333 !important;
     text-decoration: none !important;
@@ -264,9 +257,7 @@
     padding: 10px 16px !important;
     margin: 0;
     border: none !important;
-    outline: none;
-    
-    /* Button-like appearance */
+    outline: none;    
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -279,7 +270,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Active state */
 .pagination .active .page-link {
     background-color: #4CAF50 !important;
     color: white !important;
@@ -287,7 +277,6 @@
     box-shadow: 0 3px 6px rgba(76, 175, 80, 0.3);
 }
 
-/* Hover effect */
 .pagination .page-link:hover {
     background-color: #d5d5d5 !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -297,21 +286,18 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigation button styling */
 .pagination .prev .page-link,
 .pagination .next .page-link {
     font-weight: 600;
     background-color: #dddddd;
 }
 
-/* First/Last button styling */
 .pagination .first .page-link,
 .pagination .last .page-link {
     background-color: #d0d0d0;
     min-width: 60px;
 }
 
-/* Responsive pagination */
 @media (max-width: 580px) {
     .pagination-container {
         text-align: center;
@@ -331,22 +317,21 @@
     }
 }
 
-/* Responsive Adjustments */
 @media (max-width: 1200px) {
     .news-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 cards per row on medium screens */
+        grid-template-columns: repeat(3, 1fr); 
     }
 }
 
 @media (max-width: 900px) {
     .news-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
 
 @media (max-width: 580px) {
     .news-grid {
-        grid-template-columns: 1fr; /* 1 card per row on mobile */
+        grid-template-columns: 1fr;
     }
     
     .category-title {
@@ -354,7 +339,6 @@
     }
 }
 
-/* Categories Grid Layout */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -416,7 +400,6 @@
     color: #2E7D32;
 }
 
-/* Responsive adjustments for category index */
 @media (max-width: 1000px) {
     .categories-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -436,7 +419,6 @@
     margin-top: 20px;
 }
 
-/* Category Form Styling */
 .form-navigation {
     margin-bottom: 25px;
 }
@@ -560,10 +542,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
-.btn-save:active {
-}
 
-/* Alert Styles */
 .alert {
     padding: 15px;
     margin-bottom: 20px;
@@ -581,7 +560,6 @@
     padding: 0;
 }
 
-/* Tag Styles */
 .tag {
     display: inline-block;
     background-color: #f0f0f0;
@@ -600,7 +578,6 @@
     color: #333;
 }
 
-/* Responsive Adjustments for forms */
 @media (max-width: 768px) {
     .form-card {
         padding: 20px;
@@ -625,4 +602,35 @@
         left: 50%;
         transform: translateX(-50%);
     }
+}
+
+.form-errors {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.form-errors ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 5px 0;
+}
+
+.form-errors li {
+    margin-bottom: 3px;
+}
+
+div.form-errors {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: #d32f2f;
+}
+
+.form-control.is-invalid {
+    border-color: #d32f2f;
+    background-color: #fff6f6;
 }

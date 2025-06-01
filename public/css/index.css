@@ -29,3 +29,35 @@
     display: flex;
     gap: 50px;
 }
+
+
+.form-errors {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.form-errors ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 5px 0;
+}
+
+.form-errors li {
+    margin-bottom: 3px;
+}
+
+div.form-errors {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: #d32f2f;
+}
+
+.form-control.is-invalid {
+    border-color: #d32f2f;
+    background-color: #fff6f6;
+}

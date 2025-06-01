@@ -56,7 +56,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Login Prompt */
 .login-prompt {
     background-color: #f5f5f5;
     padding: 15px;
@@ -80,7 +79,6 @@
     text-decoration: underline;
 }
 
-/* Comments List */
 .comments-list {
     margin-top: 30px;
 }
@@ -198,4 +196,35 @@
     .comment-date {
         margin-left: 46px;
     }
+}
+
+.form-errors {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.form-errors ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 5px 0;
+}
+
+.form-errors li {
+    margin-bottom: 3px;
+}
+
+div.form-errors {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: #d32f2f;
+}
+
+.form-control.is-invalid {
+    border-color: #d32f2f;
+    background-color: #fff6f6;
 }

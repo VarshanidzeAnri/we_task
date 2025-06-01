@@ -20,19 +20,20 @@
             </div>
         {% endif %}
 
-        {{ form_start(form, {'attr': {'class': 'news-form'}}) }}
+        {{ form_start(form, {'attr':  {'class': 'news-form'}}) }}
             <div class="form-section">
                 
                 <div class="form-group">
                     {{ form_label(form.title) }}
+                    <div class="form-errors">{{ form_errors(form.title) }}</div>
                     {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.title) }}
+                    
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.description) }}
+                    <div class="form-errors">{{ form_errors(form.description) }}</div>
                     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.description) }}
                 </div>
             </div>
 
@@ -41,8 +42,8 @@
                 
                 <div class="form-group">
                     {{ form_label(form.content) }}
+                    <div class="form-errors">{{ form_errors(form.content) }}</div>
                     {{ form_widget(form.content, {'attr': {'class': 'form-control content-editor'}}) }}
-                    {{ form_errors(form.content) }}
                 </div>
             </div>
 
@@ -50,6 +51,8 @@
                 
                 <div class="form-group">
                     {{ form_label(form.picture) }}
+                    <div class="form-errors">{{ form_errors(form.picture) }}</div>
+
                     <div class="image-upload-container">
                         <div class="image-upload-area" id="dropArea" {% if existing_image is defined and existing_image %}class="has-image"{% endif %}>
                             <div class="hidden-form-widget">
@@ -72,11 +75,11 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-errors">{{ form_errors(form.picture) }}</div>
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.categories) }}
+                    <div class="form-errors">{{ form_errors(form.categories) }}</div>
                     <div class="custom-multiselect-container">
                         {{ form_widget(form.categories, {
                             'attr': {
@@ -91,7 +94,7 @@
                             <div class="multiselect-dropdown"></div>
                         </div>
                     </div>
-                    {{ form_errors(form.categories) }}
+                    
                 </div>
             </div>
 

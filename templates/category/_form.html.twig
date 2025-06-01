@@ -23,8 +23,8 @@
         {{ form_start(form, {'attr': {'class': 'category-form'}}) }}
             <div class="form-group">
                 {{ form_label(form.title) }}
+                <div class="form-errors">{{ form_errors(form.title) }}</div>
                 {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.title) }}
             </div>
 
             <div class="form-actions">

@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupFileUpload() {
     const dropArea = document.getElementById('dropArea');
-    // Updated selector to find the input within the hidden form widget
     const fileInput = dropArea ? dropArea.querySelector('.hidden-form-widget input[type="file"]') : null;
     
     if (!dropArea || !fileInput) return;
@@ -77,7 +76,6 @@ function setupFileUpload() {
             removeButton.style.display = 'flex'; 
             dropArea.classList.add('has-image');
             
-            // Hide any help text when image is selected
             const helpText = document.querySelector('.image-size-help');
             if (helpText) {
                 helpText.style.display = 'none';
@@ -99,7 +97,6 @@ function setupFileUpload() {
         removeButton.style.display = 'none';
         dropArea.classList.remove('has-image');
         
-        // Show any help text when image is removed
         const helpText = document.querySelector('.image-size-help');
         if (helpText) {
             helpText.style.display = 'block';
@@ -125,7 +122,6 @@ function setupFileUpload() {
     });
 }
 
-// Initialize with existing image when in edit mode
 function initializeWithExistingImage(imageSrc) {
     const dropArea = document.getElementById('dropArea');
     const preview = document.getElementById('imagePreview');
@@ -138,16 +134,13 @@ function initializeWithExistingImage(imageSrc) {
         return;
     }
     
-    // Set the image source
     preview.src = imageSrc;
     
-    // Update the UI to show we have an image
     placeholder.style.display = 'none';
     previewContainer.style.display = 'block';
     removeButton.style.display = 'flex';
     dropArea.classList.add('has-image');
     
-    // Hide help text
     const helpText = document.querySelector('.image-size-help');
     if (helpText) {
         helpText.style.display = 'none';

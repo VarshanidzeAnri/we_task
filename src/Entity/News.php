@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -18,12 +19,14 @@ class News
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter a title')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Please enter content')]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -36,6 +39,10 @@ class News
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'news')]
+    #[Assert\Count([
+        'min' => 1, 
+        'minMessage' => 'Please choose at least one category'
+    ])]
     private Collection $categories;
 
     /**
@@ -166,7 +173,6 @@ class News
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getNews() === $this) {
                 $comment->setNews(null);
             }
