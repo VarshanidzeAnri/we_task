@@ -12,6 +12,8 @@
             <i class="fas fa-arrow-left"></i> Back
         </a>
         
+        {% if app.user %}
+            
         <div class="actions-container">
             <a href="{{ path('news_edit', {'id': news.id}) }}" class="btn-action btn-edit">
                 <i class="fas fa-edit"></i> Edit
@@ -20,6 +22,7 @@
                 <i class="fas fa-trash"></i> Delete
             </a>
         </div>
+        {% endif %}
     </div>
 
     <article class="news-article">
