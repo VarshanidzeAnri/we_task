@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class News
 {
     #[ORM\Id]
@@ -83,7 +84,7 @@ class News
         return $this->content;
     }
 
-    public function setContext(string $content): static
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
@@ -100,6 +101,12 @@ class News
         $this->insertDate = $insertDate;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setInsertDateValue(): void
+    {
+        $this->insertDate = new \DateTimeImmutable();
     }
 
     public function getPicture(): ?string

@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/news.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/news.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="news-form-container">
+    <div class="form-navigation">
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="form-card">
+        <header class="form-header">
+            <h1 class="form-title">Create News</h1>
+        </header>
+
+        {% if form.vars.errors|length > 0 %}
+            <div class="alert alert-danger">
+                <ul class="error-list">
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {{ form_start(form, {'attr': {'class': 'news-form'}}) }}
+            <div class="form-section">
+                
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Content</h3>
+                
+                <div class="form-group">
+                    {{ form_label(form.content) }}
+                    {{ form_widget(form.content, {'attr': {'class': 'form-control content-editor'}}) }}
+                    {{ form_errors(form.content) }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                
+                <div class="form-group">
+                    {{ form_label(form.picture) }}
+                    {{ form_widget(form.picture, {'attr': {'class': 'form-control-file'}}) }}
+                    {{ form_errors(form.picture) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.categories) }}
+                    <div class="custom-multiselect-container">
+                        {{ form_widget(form.categories, {
+                            'attr': {
+                                'class': 'form-control-select original-select',
+                                'multiple': 'multiple'
+                            }
+                        }) }}
+                        <div class="custom-multiselect">
+                            <div class="multiselect-selected-options">
+                                <input type="text" class="multiselect-search" placeholder="Select categories">
+                            </div>
+                            <div class="multiselect-dropdown"></div>
+                        </div>
+                    </div>
+                    {{ form_errors(form.categories) }}
+                    <small class="form-help">Click to select multiple categories</small>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-paper-plane"></i> Save
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

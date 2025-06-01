@@ -1,0 +1,35 @@
+<div class="category-container">
+    <div class="form-navigation">
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="form-card">
+        <div class="form-header">
+            <h1 class="form-title">{{ form_name }}</h1>
+        </div>
+
+        {% if form.vars.errors|length > 0 %}
+            <div class="alert alert-danger">
+                <ul class="error-list">
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        {{ form_start(form, {'attr': {'class': 'category-form'}}) }}
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div class="form-actions">
+                {{ form_widget(form.save, {'label': button_label , 'attr': {'class': 'btn-save'}}) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

@@ -15,7 +15,13 @@
     <body>
         <div class="header-container">
             <div class="header">
+            <div class="header-links">
                 <a class="link" href="{{ path('home') }}">Home</a>
+                {% if app.user %}
+                    <a class="link" href="{{ path('category_new') }}">Add Category</a>
+                    <a class="link" href="{{ path('news_new') }}">Add News</a>
+                {% endif %}
+            </div>
                 {% if app.user %}
                 <a class="link"  href="{{ path('auth_logout') }}">Logout</a>
                 {% else %}
