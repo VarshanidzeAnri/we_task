@@ -40,11 +40,9 @@ class SendEmailCommand extends Command
         $recipient = $input->getOption('recipient');
         $subject = $input->getOption('subject');
         
-        // Get total number of news articles
         $newsCount = $this->getNewsCount();
         $io->info("Found {$newsCount} news items");
         
-        // Prepare and send email
         $email = (new Email())
             ->from('varshanadev@gmail.com')
             ->to($recipient)
@@ -52,7 +50,6 @@ class SendEmailCommand extends Command
             ->html($this->getBeautifulEmailTemplate($newsCount));
 
         try {
-            // Send the email
             $this->mailer->send($email);
             $io->success('Email with statistics sent successfully!');
         } catch (\Exception $e) {
@@ -72,7 +69,6 @@ class SendEmailCommand extends Command
             $query = $this->entityManager->createQuery('SELECT COUNT(n.id) FROM App\Entity\News n');
             return (int) $query->getSingleScalarResult();
         } catch (\Exception $e) {
-            // Log error or handle it as needed
             return 0;
         }
     }
