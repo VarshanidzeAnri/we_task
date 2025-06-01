@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Form\NewsForm;
+use App\Form\CommentForm;
 use App\Service\FileUploader;
 use App\Service\RandomStringGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,10 +18,18 @@ use Symfony\Component\Routing\Attribute\Route;
 final class NewsController extends AbstractController
 {
     #[Route('/news/{id<\d+>}', name: 'news_details')]
-    public function details(News $news): Response
+    public function details(News $news, EntityManagerInterface $entityManager): Response
     {
+        $comments = $entityManager->getRepository(Comment::class)
+            ->findBy(['news' => $news], ['id' => 'DESC']);
+        
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentForm::class, $comment);
+        
         return $this->render('news/details.html.twig', [
             'news' => $news,
+            'comments' => $comments,
+            'comment_form' => $commentForm,
         ]);
     }
 

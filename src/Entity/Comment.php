@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
@@ -50,6 +51,12 @@ class Comment
         $this->insertDate = $insertDate;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setInsertDateValue(): void
+    {
+        $this->insertDate = new \DateTimeImmutable();
     }
 
     public function getNews(): ?News

@@ -39,6 +39,7 @@ security:
         - { path: ^/category/\d+/delete, roles: IS_AUTHENTICATED_FULLY }  # Also protect category delete route
         - { path: ^/news/\d+/edit, roles: IS_AUTHENTICATED_FULLY }  # Also protect category delete route
         - { path: ^/news/\d+/delete, roles: IS_AUTHENTICATED_FULLY }  # Also protect category delete route
+        - { path: ^/comment/\d+/delete, roles: IS_AUTHENTICATED_FULLY }  # Also protect category delete route
         # - { path: home, roles: IS_AUTHENTICATED_FULLY  }
         # - { path: ^/profile, roles: ROLE_USER }
 
