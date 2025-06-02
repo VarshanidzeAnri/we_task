@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\News;
 use App\Entity\NewsView;
+use App\Service\EmailService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,19 +22,19 @@ use Doctrine\ORM\EntityManagerInterface;
 )]
 class SendEmailCommand extends Command
 {
-    private $mailer;
     private $entityManager;
+    private $emailService;
 
-    public function __construct(MailerInterface $mailer, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EmailService $emailService)
     {
         parent::__construct();
-        $this->mailer = $mailer;
         $this->entityManager = $entityManager;
+        $this->emailService = $emailService;
     }
 
     protected function configure()
     {
-        $this->setDescription('Send email with top 10 viewed news weekly');
+        $this->setDescription('Send email with top viewed news');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -43,16 +44,14 @@ class SendEmailCommand extends Command
         
         $topNews = $this->getTopViewedNews();
         $emailContent = $this->formatEmailContent($topNews);
-        
-        $email = (new Email())
-            ->from('varshanadev@gmail.com')
-            ->to('anrivarshanidze2407@gmail.com')
-            ->subject('Top 10 News Views: ' . $startOfWeek->format('M d') . ' - ' . $endOfWeek->format('M d'))
-            ->text($emailContent);
 
-        $this->mailer->send($email);
+        $this->emailService->sendMail(
+            'varshanadev@gmail.com', 
+            'anrivarshanidze2407@gmail.com', 
+            'Top 10 News Views: ' . $startOfWeek->format('M d') . ' - ' . $endOfWeek->format('M d'),
+            $emailContent);
 
-        $output->writeln('Email with top 10 viewed news sent successfully!');
+        $output->writeln('Email sent successfully!');
 
         return Command::SUCCESS;
     }
