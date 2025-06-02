@@ -24,12 +24,16 @@ class SendEmailCommand extends Command
 {
     private $entityManager;
     private $emailService;
+    private $startOfWeek;
+    private $endOfWeek;
 
-    public function __construct(EntityManagerInterface $entityManager, EmailService $emailService)
+    public function __construct(EntityManagerInterface $entityManager, EmailService $emailService, string $startOfWeek = 'monday this week', string $endOfWeek = 'sunday this week')
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->emailService = $emailService;
+        $this->startOfWeek = new \DateTimeImmutable($startOfWeek);
+        $this->endOfWeek = new \DateTimeImmutable($endOfWeek);
     }
 
     protected function configure()
@@ -38,17 +42,14 @@ class SendEmailCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $startOfWeek = new \DateTimeImmutable('monday this week');
-        $endOfWeek = new \DateTimeImmutable('sunday this week');
-        
+    {   
         $topNews = $this->getTopViewedNews();
         $emailContent = $this->formatEmailContent($topNews);
 
         $this->emailService->sendMail(
             'varshanadev@gmail.com', 
             'anrivarshanidze2407@gmail.com', 
-            'Top 10 News Views: ' . $startOfWeek->format('M d') . ' - ' . $endOfWeek->format('M d'),
+            'Top 10 News Views: ' . $this->startOfWeek->format('M d') . ' - ' . $this->endOfWeek->format('M d'),
             $emailContent);
 
         $output->writeln('Email sent successfully!');
@@ -58,11 +59,8 @@ class SendEmailCommand extends Command
     
     private function getTopViewedNews(): array
     {
-        $startOfWeek = new \DateTimeImmutable('monday this week');
-        $startOfWeek = $startOfWeek->setTime(0, 0, 0);
-        
-        $endOfWeek = new \DateTimeImmutable('sunday this week');
-        $endOfWeek = $endOfWeek->setTime(23, 59, 59);
+        $startOfWeek = $this->startOfWeek->setTime(0, 0, 0);
+        $endOfWeek = $this->endOfWeek->setTime(23, 59, 59);
         
         $em = $this->entityManager->createQueryBuilder();
         
@@ -80,11 +78,8 @@ class SendEmailCommand extends Command
     }
     
     private function formatEmailContent(array $topNews): string
-    {
-        $startOfWeek = new \DateTimeImmutable('monday this week');
-        $endOfWeek = new \DateTimeImmutable('sunday this week');
-        
-        $content = "TOP 10 VIEWED NEWS: {$startOfWeek->format('M d')} - {$endOfWeek->format('M d')}\n";
+    {        
+        $content = "TOP 10 VIEWED NEWS: {$this->startOfWeek->format('M d')} - {$this->endOfWeek->format('M d')}\n";
         
         if (empty($topNews)) {
             $content .= "No news views were recorded this week.\n";
