@@ -16,7 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[AsCommand(
-    name: 'app:send-email',
+    name: 'send:mail',
     description: 'Send a email with statistics',
 )]
 class SendEmailCommand extends Command
