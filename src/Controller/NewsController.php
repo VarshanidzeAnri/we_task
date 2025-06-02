@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\NewsView;
 use App\Form\NewsForm;
 use App\Form\CommentForm;
 use App\Service\FileUploader;
-use App\Service\RandomStringGenerator;
+use App\Service\NewsViewService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +18,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class NewsController extends AbstractController
 {
+    public function __construct(
+        private NewsViewService $newsViewService,
+    ){}
+
     #[Route('/news/{id<\d+>}', name: 'news_details')]
     public function details(News $news, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            $this->newsViewService->store($news, $entityManager);
+        }
+        
         $comments = $entityManager->getRepository(Comment::class)
             ->findBy(['news' => $news], ['id' => 'DESC']);
         
         $comment = new Comment();
         $commentForm = $this->createForm(CommentForm::class, $comment);
-        
+
         return $this->render('news/details.html.twig', [
             'news' => $news,
             'comments' => $comments,
@@ -54,7 +63,6 @@ final class NewsController extends AbstractController
 
             $entityManager->persist($news);
             $entityManager->flush();
-            $this->addFlash('success', 'News created successfully!');
 
             return $this->redirectToRoute('home');
         }
@@ -88,7 +96,6 @@ final class NewsController extends AbstractController
             }
 
             $entityManager->flush();
-            $this->addFlash('success', 'News updated successfully!');
 
             return $this->redirectToRoute('home');
         }
@@ -110,7 +117,6 @@ final class NewsController extends AbstractController
             }
         }
         $entityManager->flush();
-        $this->addFlash('success', 'News deleted successfully!');
 
         return $this->redirectToRoute('home');
     }

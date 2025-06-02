@@ -24,3 +24,8 @@ services:
     # Explicitly register the RandomStringGenerator service
     App\Service\RandomStringGenerator:
         public: true
+
+    App\Service\NewsService:
+        arguments:
+            # Use the correct path for uploads - avoid double paths
+            $newsFilesDirectory: '%kernel.project_dir%/public/news'

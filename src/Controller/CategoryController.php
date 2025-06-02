@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryForm;
 use App\Repository\CategoryRepository;
+use App\Service\CategoryService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Dom\Entity;
@@ -16,12 +17,17 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CategoryController extends AbstractController
 {
+    private CategoryService $categoryService;
+    
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     #[Route('/category/{id<\d+>}', name: 'category_show')]
     public function show(Category $category, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $queryBuilder = $categoryRepository->getNewsForCategoryQueryBuilder($category);
-        
-        $newsPagination = $paginator->paginate($queryBuilder, $request->query->getInt('page', 1), 10);
+        $newsPagination = $this->categoryService->getPaginatedNews($category, $categoryRepository, $paginator, $request);
 
         return $this->render('category/show.html.twig', [
             'category' => $category,
@@ -36,10 +42,8 @@ final class CategoryController extends AbstractController
         $form = $this->createForm(CategoryForm::class, $category);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            $entityManager->persist($category);
-            $entityManager->flush();
-            $this->addFlash('success', 'Category created successfully!');
+        if($form->isSubmitted() && $form->isValid()){
+            $this->categoryService->create($category, $entityManager);
 
             return $this->redirectToRoute('home');
         }
@@ -53,15 +57,12 @@ final class CategoryController extends AbstractController
     public function edit(Category $category, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CategoryForm::class, $category);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->flush();
-            $this->addFlash('success', 'Category updated successfully!');
 
             return $this->redirectToRoute('category_show', ['id' => $category->getId()]);
-
         }
 
         return $this->render('category/edit.html.twig', [
@@ -72,9 +73,7 @@ final class CategoryController extends AbstractController
     #[Route('/category/{id<\d+>}/delete', name: 'category_delete')]
     public function delete(Category $category, EntityManagerInterface $entityManager): Response
     {
-        $entityManager->remove($category);
-        $entityManager->flush();
-        $this->addFlash('success', 'Category deleted successfully!');
+        $this->categoryService->delete($category, $entityManager);
 
         return $this->redirectToRoute('home');
     }

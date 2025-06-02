@@ -51,10 +51,19 @@ class News
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'news')]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, NewsView>
+     */
+    #[ORM\OneToMany(targetEntity: NewsView::class, mappedBy: 'news', orphanRemoval: true)]
+    private Collection $newsViews;
+
+   
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->newsViews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,4 +189,35 @@ class News
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, NewsView>
+     */
+    public function getNewsViews(): Collection
+    {
+        return $this->newsViews;
+    }
+
+    public function addNewsView(NewsView $newsView): static
+    {
+        if (!$this->newsViews->contains($newsView)) {
+            $this->newsViews->add($newsView);
+            $newsView->setNews($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsView(NewsView $newsView): static
+    {
+        if ($this->newsViews->removeElement($newsView)) {
+            // set the owning side to null (unless already changed)
+            if ($newsView->getNews() === $this) {
+                $newsView->setNews(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

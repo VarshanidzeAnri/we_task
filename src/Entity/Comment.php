@@ -24,6 +24,7 @@ class Comment
     private ?\DateTimeImmutable $insertDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?News $news = null;
 
     public function getId(): ?int

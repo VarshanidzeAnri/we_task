@@ -39,7 +39,7 @@ class NewsForm extends AbstractType
 
             ->add('picture', FileType::class, [
                 
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'attr' => [
                     'accept' => 'image/*',
