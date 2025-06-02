@@ -16,13 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/news')]
 final class NewsController extends AbstractController
 {
     public function __construct(
         private NewsViewService $newsViewService,
     ){}
 
-    #[Route('/news/{id<\d+>}', name: 'news_details')]
+    #[Route('/{id<\d+>}', name: 'news_details')]
     public function details(News $news, EntityManagerInterface $entityManager): Response
     {
         if (!$this->getUser()) {
@@ -42,7 +43,7 @@ final class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/news/new', name: 'news_new')]
+    #[Route('/new', name: 'news_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         $news = new News();
@@ -73,7 +74,7 @@ final class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/news/{id<\d+>}/edit', name: 'news_edit')]
+    #[Route('/{id<\d+>}/edit', name: 'news_edit')]
     public function edit(News $news, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(NewsForm::class, $news);
@@ -106,7 +107,7 @@ final class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/news/{id<\d+>}/delete', name: 'news_delete')]
+    #[Route('/{id<\d+>}/delete', name: 'news_delete')]
     public function delete(News $news, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($news);

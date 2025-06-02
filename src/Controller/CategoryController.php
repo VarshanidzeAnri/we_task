@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/category')]
 final class CategoryController extends AbstractController
 {
     private CategoryService $categoryService;
@@ -24,7 +25,7 @@ final class CategoryController extends AbstractController
         $this->categoryService = $categoryService;
     }
 
-    #[Route('/category/{id<\d+>}', name: 'category_show')]
+    #[Route('/{id<\d+>}', name: 'category_show')]
     public function show(Category $category, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $newsPagination = $this->categoryService->getPaginatedNews($category, $categoryRepository, $paginator, $request);
@@ -35,7 +36,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/new', name: 'category_new')]
+    #[Route('/new', name: 'category_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $category = new Category();
@@ -53,7 +54,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/{id<\d+>}/edit', name: 'category_edit')]
+    #[Route('/{id<\d+>}/edit', name: 'category_edit')]
     public function edit(Category $category, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CategoryForm::class, $category);
@@ -70,7 +71,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/{id<\d+>}/delete', name: 'category_delete')]
+    #[Route('/{id<\d+>}/delete', name: 'category_delete')]
     public function delete(Category $category, EntityManagerInterface $entityManager): Response
     {
         $this->categoryService->delete($category, $entityManager);

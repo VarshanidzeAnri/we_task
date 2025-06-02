@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/comment')]
 final class CommentController extends AbstractController
 {
     private CommentService $commentService;
@@ -20,7 +21,7 @@ final class CommentController extends AbstractController
         $this->commentService = $commentService;
     }
     
-    #[Route('/news/{id<\d+>}/comment', name: 'comment_add')]
+    #[Route('/news/{id<\d+>}', name: 'comment_add')]
     public function add(News $news, Request $request): Response
     {
         $comment = new Comment();
@@ -36,7 +37,7 @@ final class CommentController extends AbstractController
         return $this->redirectToRoute('news_details', ['id' => $news->getId()]);
     }
     
-    #[Route('/comment/{id<\d+>}/delete', name: 'comment_delete')]
+    #[Route('/{id<\d+>}/delete', name: 'comment_delete')]
     public function delete(Comment $comment): Response
     {
         $newsId = $this->commentService->deleteComment($comment);
