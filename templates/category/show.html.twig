@@ -15,7 +15,7 @@
                     <a href="{{ path('news_new', {'categoryId': category.id}) }}" class="btn-add">Add News</a>
                     <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn-edit">Edit Category</a>
                     <a href="{{ path('category_delete', {'id': category.id}) }}" class="btn-delete" onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.')">
-                        <i class="fas fa-trash"></i> Delete Category
+                        Delete Category
                     </a>
                 </div>
             {% endif %}
