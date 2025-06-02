@@ -62,6 +62,25 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: #4c56af;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add:hover {
+    background-color: #4c56af;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
 .btn-delete {
     display: inline-flex;
     align-items: center;

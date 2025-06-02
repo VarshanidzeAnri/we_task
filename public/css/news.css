@@ -35,6 +35,11 @@
     color: white;
 }
 
+.btn-add {
+    background-color: #1a365d;
+    color: white;
+}
+
 .btn-edit:hover {
     background-color: #3d8b40;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -269,7 +274,6 @@
 .article-footer {
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
 }
 
 .article-tags h4 {
@@ -354,7 +358,6 @@
 .form-section {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
 }
 
 .section-title {
@@ -926,4 +929,16 @@ div.form-errors {
     .article-content {
         font-size: 16px;
     }
+}
+
+
+.has-error .multiselect-selected-options,
+.error-border {
+    border: 1px solid #dc3545 !important;
+}
+
+.validation-error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }
