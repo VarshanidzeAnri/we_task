@@ -39,10 +39,6 @@ class AppFixtures extends Fixture
         $category->setTitle('cat2');
         $manager->persist($category);
 
-        $category = new Category();
-        $category->setTitle('cat3');
-        $manager->persist($category);
-
         $manager->flush();
     }
 }
