@@ -43,7 +43,7 @@ final class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/new/{categoryId}', name: 'news_new', requirements: ['categoryId' => '\d+'], defaults: ['categoryId' => null])]
+    #[Route('/new/{categoryId?}', name: 'news_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader, ?int $categoryId = null): Response
     {
         $news = new News();
